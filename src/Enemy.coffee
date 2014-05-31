@@ -1,6 +1,7 @@
 cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
 Interactive = require 'plugins/ui/Interactive'
+Eye = require 'Eye'
 
 class Enemy extends cg.Actor
   @plugin Physical, Interactive
@@ -26,7 +27,20 @@ class Enemy extends cg.Actor
         'scale.x': 1
         'scale.y': 1
       easeFunc: 'elastic.out'
+
     cg.sounds.spawn.play(cg.rand(0.3,0.5))
+
+    @leftEye = @addChild new Eye
+      x: 4
+      y: -2
+      scaleX: 0.6
+      scaleY: 0.6
+
+    @rightEye = @addChild new Eye
+      x: @width-4
+      y: -2
+      scaleX: 0.6
+      scaleY: 0.6
 
   update: ->
     targetVelocity = @vecTo(cg('#player')).mag(@speed)
@@ -37,6 +51,9 @@ class Enemy extends cg.Actor
 
     if bullet = @touches cg('bullet')
       @hit(bullet)
+
+    @leftEye.lookAt cg('#player')
+    @rightEye.lookAt cg('#player')
 
   hit: (bullet) ->
     @body.v.$add(bullet.body.v.mul(0.5))
