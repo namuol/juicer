@@ -64,6 +64,8 @@ class Enemy extends cg.Actor
     cg.sounds.wallHit.play(cg.rand(0.3,0.5))
     bullet.destroy()
     @life -= bullet.strength
+    @leftEye.wince().ball.rotation = cg.rand -Math.PI, Math.PI
+    @rightEye.wince().ball.rotation = cg.rand -Math.PI, Math.PI
     @scale.x = @scale.y = 2
     @tween 'scale.x', 1, 150
     @tween 'scale.y', 1, 150
