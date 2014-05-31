@@ -8,8 +8,14 @@ class Enemy extends cg.Actor
   init: ->
     @addClass 'enemy'
     @texture = 'enemy_basic'
+
+    @anchor.x = @anchor.y = 0.5
+
     @body.width = @width
     @body.height = @height
+    @body.offset.x = -@width/2
+    @body.offset.y = -@height/2
+
     @life = 3
 
   update: ->
@@ -25,6 +31,9 @@ class Enemy extends cg.Actor
     cg.sounds.wallHit.play(cg.rand(0.3,0.5))
     bullet.destroy()
     @life -= bullet.strength
+    @scale.x = @scale.y = 1.5
+    @tween 'scale.x', 1, 150
+    @tween 'scale.y', 1, 150
     if @life <= 0
       cg.sounds.hit.play()
       @destroy()
