@@ -16,12 +16,13 @@ class Player extends cg.Actor
     @controls = cg.input.controls.player
 
     @speed = 100
+    @direction = new cg.math.Vector2
 
     @on 'horiz', (val) ->
-      @body.v.x = val * @speed
+      @direction.x = val
 
     @on 'vert', (val) ->
-      @body.v.y = val * @speed
+      @direction.y = val
 
     @on cg.input, 'mouseDown', ->
       @shoot()
@@ -35,6 +36,7 @@ class Player extends cg.Actor
     shot.body.v = @vecToMouse().mag(500)
 
   update: ->
-    # Called once every frame.
+    targetVelocity = @direction.norm().mul(@speed)
+    @body.v.$add(targetVelocity.sub(@body.v).mul(0.2))
 
 module.exports = Player
