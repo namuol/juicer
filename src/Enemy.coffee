@@ -17,9 +17,11 @@ class Enemy extends cg.Actor
     @body.offset.y = -@height/2
 
     @life = 3
+    @speed = 50
 
   update: ->
-    @body.v.set(@vecTo(cg('#player'))).mag(50)
+    targetVelocity = @vecTo(cg('#player')).mag(@speed)
+    @body.v.$add(targetVelocity.sub(@body.v).mul(0.2))
 
     for other in cg('enemy')
       cg.physics.collide @body, other.body  unless other is @
@@ -28,6 +30,7 @@ class Enemy extends cg.Actor
       @hit(bullet)
 
   hit: (bullet) ->
+    @body.v.$add(bullet.body.v.mul(0.5))
     cg.sounds.wallHit.play(cg.rand(0.3,0.5))
     bullet.destroy()
     @life -= bullet.strength
