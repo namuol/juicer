@@ -16,7 +16,7 @@ module.exports = ->
     name: 'Juicer'
     width: 360
     height: 360
-    backgroundColor: 0x222222
+    backgroundColor: 0xaaaaaa
     displayMode: 'pixel'
 
   loadingScreen = cg.stage.addChild new cg.extras.LoadingScreen

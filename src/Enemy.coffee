@@ -11,10 +11,10 @@ class Enemy extends cg.Actor
 
     @anchor.x = @anchor.y = 0.5
 
-    @body.width = @width
-    @body.height = @height
-    @body.offset.x = -@width/2
-    @body.offset.y = -@height/2
+    @body.width = 16
+    @body.height = 16
+    @body.offset.x = -@body.width/2
+    @body.offset.y = -@body.height/2
 
     @life = 3
     @speed = 50
