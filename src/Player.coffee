@@ -34,6 +34,7 @@ class Player extends cg.Actor
       y: @worldY
 
     shot.body.v = @vecToMouse().mag(500)
+    @body.v.$sub(shot.body.v.mul(0.15))
 
   update: ->
     targetVelocity = @direction.norm().mul(@speed)
