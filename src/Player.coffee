@@ -39,13 +39,23 @@ class Player extends cg.Actor
 
     @jitter = 50
 
-    @leftEye = @addChild new Eye
+    @eyes = @addChild new cg.Actor
+
+    @leftEye = @eyes.addChild new Eye
       x: -4
       y: -2
 
-    @rightEye = @addChild new Eye
+    @rightEye = @eyes.addChild new Eye
       x: 4
       y: -2
+
+    @zRotation = 0
+    @zRotationVelocity = 0
+
+    @mask = @addChild new cg.gfx.Graphics
+    @mask.beginFill()
+    @mask.drawCircle(0,0,9.5)
+    @mask.endFill()
 
   shoot: ->
     cg.sounds.shot.play(cg.rand(0.15,0.4))
@@ -65,9 +75,12 @@ class Player extends cg.Actor
   update: ->
     targetVelocity = @direction.norm().mul(@speed)
     @body.v.$add(targetVelocity.sub(@body.v).mul(0.2))
-    # @flipX = @body.v.x < 0
-
+    @zRotation += (cg.math.angleDiff -@vecToMouse().angle()-Math.PI*1.5, @zRotation) * 0.1
+    @zRotation = cg.math.minAngle @zRotation
+    @eyes.x = (@zRotation / Math.PI) * 20
     @leftEye.lookAt cg.input.mouse
     @rightEye.lookAt cg.input.mouse
+
+
 
 module.exports = Player

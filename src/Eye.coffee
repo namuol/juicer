@@ -26,14 +26,6 @@ class Eye extends cg.Actor
 
   update: ->
     targetRotationVelocity = cg.math.angleDiff @targetRotation, @ball.rotation
-
-    if Math.abs targetRotationVelocity > Math.PI
-      if @targetRotation > 0
-        @targetRotation = Math.PI*2 - @targetRotation
-      else
-        @targetRotation = Math.PI*2 + @targetRotation
-      targetRotationVelocity = @targetRotation - @ball.rotation
-
     @rotationVelocity += (targetRotationVelocity - @rotationVelocity) * 0.1
     @ball.rotation += @rotationVelocity
 
