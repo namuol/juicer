@@ -4,6 +4,9 @@ Enemy = require 'Enemy'
 
 class Game extends cg.Scene
   init: ->
+    @bg = @addChild new cg.Actor
+      texture: 'bg'
+
     @player = @addChild new Player
       id: 'player'
       x: cg.width/2
