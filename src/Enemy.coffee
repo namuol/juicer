@@ -16,6 +16,7 @@ class Enemy extends cg.Actor
     @body.height = 16
     @body.offset.x = -@body.width/2
     @body.offset.y = -@body.height/2
+    @body.bounce = 1
 
     @life = 3
     @speed = 100
@@ -42,7 +43,8 @@ class Enemy extends cg.Actor
       scaleX: 0.6
       scaleY: 0.6
 
-    @animate ['speed', 0, 150, 'back.out'], ['speed', @speed, 150, 'quad.out']
+    rand = -> cg.rand 100, 250
+    @animate ['speed', 0, rand, 'back.out'], ['speed', @speed, rand, 'quad.out']
 
   update: ->
     targetVelocity = @vecTo(cg('#player')).mag(@speed)
@@ -62,7 +64,7 @@ class Enemy extends cg.Actor
     cg.sounds.wallHit.play(cg.rand(0.3,0.5))
     bullet.destroy()
     @life -= bullet.strength
-    @scale.x = @scale.y = 1.5
+    @scale.x = @scale.y = 2
     @tween 'scale.x', 1, 150
     @tween 'scale.y', 1, 150
     if @life <= 0
