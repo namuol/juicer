@@ -14,8 +14,12 @@ class Enemy extends cg.Actor
   update: ->
     @body.v.set(@vecTo(cg('#player'))).mag(50)
 
+    for other in cg('enemy')
+      cg.physics.collide @body, other.body  unless other is @
+
     if bullet = @touches cg('bullet')
       @hit(bullet)
+
 
   hit: (bullet) ->
     cg.sounds.hit.play()
