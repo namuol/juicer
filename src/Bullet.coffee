@@ -13,6 +13,7 @@ class Bullet extends cg.Actor
 
     # Whenever a bullet hits a wall...
     @on @body, 'collision', ->
+      cg.sounds.wallHit.play(0.25)
       @destroy()
 
 module.exports = Bullet

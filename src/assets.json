@@ -10,6 +10,9 @@
   "fonts": {
   },
   "sounds": {
+    "shot": "assets/shot.*",
+    "hit": "assets/hit.*",
+    "wallHit": "assets/wallHit.*"
   },
   "music": {
   },

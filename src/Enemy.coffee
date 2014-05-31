@@ -18,6 +18,7 @@ class Enemy extends cg.Actor
       @hit(bullet)
 
   hit: (bullet) ->
+    cg.sounds.hit.play()
     @destroy()
     bullet.destroy()
 

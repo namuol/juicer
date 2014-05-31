@@ -27,6 +27,7 @@ class Player extends cg.Actor
       @shoot()
 
   shoot: ->
+    cg.sounds.shot.play(0.4)
     shot = cg('#game').addChild new Bullet
       x: @worldX
       y: @worldY
