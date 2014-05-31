@@ -50,7 +50,14 @@ class Enemy extends cg.Actor
     @body.v.$add(targetVelocity.sub(@body.v).$mul(0.2))
 
     for other in cg('enemy')
-      cg.physics.collide @body, other.body  unless other is @
+      continue  if other is @
+      impulse = cg.physics.collide @body, other.body
+      if !hit and impulse and impulse.len2() > 10000*10000
+        hit = true
+
+    if hit
+      @leftEye.wince()
+      @rightEye.wince()
 
     if bullet = @touches cg('bullet')
       @hit(bullet)
@@ -60,7 +67,7 @@ class Enemy extends cg.Actor
     @rightEye.lookAt playerPos
 
   hit: (bullet) ->
-    @body.v.$add(bullet.body.v.mul(0.5))
+    @body.v.$add(bullet.body.v.mul(0.8))
     cg.sounds.wallHit.play(cg.rand(0.3,0.5))
     bullet.destroy()
     @life -= bullet.strength
