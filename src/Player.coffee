@@ -33,13 +33,16 @@ class Player extends cg.Actor
     @repeat 100, ->
       @shoot()  if @shooting
 
+    @jitter = 50
+
   shoot: ->
     cg.sounds.shot.play(cg.rand(0.15,0.4))
     shot = cg('#game').addChild new Bullet
       x: @worldX
       y: @worldY
 
-    shot.body.v = @vecToMouse().mag(500)
+    jitter = new cg.math.Vector2(cg.rand(-@jitter,@jitter), cg.rand(-@jitter,@jitter))
+    shot.body.v = @vecToMouse().mag(500).add(jitter)
     @body.v.$sub(shot.body.v.mul(0.15))
 
   update: ->
