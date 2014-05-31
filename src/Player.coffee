@@ -45,6 +45,7 @@ class Player extends cg.Actor
     shot.body.v = @vecToMouse().mag(500).add(jitter)
     shot.rotation = shot.body.v.angle()
     @body.v.$sub(shot.body.v.mul(0.15))
+    cg('#game').shake.$add(shot.body.v.norm().mul(2))
 
   update: ->
     targetVelocity = @direction.norm().mul(@speed)

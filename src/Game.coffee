@@ -17,7 +17,12 @@ class Game extends cg.Scene
         x: cg.rand cg.width
         y: cg.rand cg.height
 
+    @shake = new cg.math.Vector2
+
   update: ->
     # Called once every frame.
+    @shake.limit(10).$mul(0.8)
+    @x = cg.rand -@shake.x, @shake.x
+    @y = cg.rand -@shake.y, @shake.y
 
 module.exports = Game
