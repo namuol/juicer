@@ -9,12 +9,13 @@ class Enemy extends cg.Actor
     @addClass 'enemy'
     @texture = 'enemy_basic'
 
-    @anchor.x = @anchor.y = 0.5
+    @anchor.x = 0.5
+    @anchor.y = 1
 
     @body.width = 16
     @body.height = 16
     @body.offset.x = -@body.width/2
-    @body.offset.y = -@body.height/2
+    @body.offset.y = -@body.height-2
     @body.bounce = 1
 
     @life = 3
@@ -24,7 +25,6 @@ class Enemy extends cg.Actor
     @tween
       duration: 750
       values:
-        'scale.x': 1
         'scale.y': 1
       easeFunc: 'elastic.out'
 
@@ -32,11 +32,12 @@ class Enemy extends cg.Actor
 
     @leftEye = @addChild Eye.pool.spawn
       x: 4
-      y: -2
+      y: -12
 
     @rightEye = @addChild Eye.pool.spawn
       x: @width-4
-      y: -2
+      y: -12
+    @scale.x = 1
 
     rand = -> cg.rand 100, 250
     # @animate ['speed', 0, rand, 'back.out'], ['speed', @speed, rand, 'quad.out']
