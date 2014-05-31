@@ -1,11 +1,10 @@
 cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
-Interactive = require 'plugins/ui/Interactive'
 
 class Bullet extends cg.Actor
-  @plugin Physical, Interactive
+  @plugin Physical, cg.util.HasPooling
 
-  init: ->
+  reset: ->
     @addClass 'bullet'
     @strength = 1
     @texture = 'bullet_basic'
@@ -16,7 +15,7 @@ class Bullet extends cg.Actor
     @body.offset.y = -@height/2
 
     # Whenever a bullet hits a wall...
-    @on @body, 'collision', ->
+    @once @body, 'collision', ->
       cg.sounds.wallHit.play(cg.rand(0.1,0.3))
       @destroy()
 

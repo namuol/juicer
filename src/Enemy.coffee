@@ -1,12 +1,11 @@
 cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
-Interactive = require 'plugins/ui/Interactive'
 Eye = require 'Eye'
 
 class Enemy extends cg.Actor
-  @plugin Physical, Interactive
+  @plugin Physical, cg.util.HasPooling
 
-  init: ->
+  reset: ->
     @addClass 'enemy'
     @texture = 'enemy_basic'
 
@@ -31,20 +30,23 @@ class Enemy extends cg.Actor
 
     cg.sounds.spawn.play(cg.rand(0.3,0.5))
 
-    @leftEye = @addChild new Eye
+    @leftEye = @addChild Eye.pool.spawn
       x: 4
       y: -2
 
-    @rightEye = @addChild new Eye
+    @rightEye = @addChild Eye.pool.spawn
       x: @width-4
       y: -2
 
     rand = -> cg.rand 100, 250
-    @animate ['speed', 0, rand, 'back.out'], ['speed', @speed, rand, 'quad.out']
+    # @animate ['speed', 0, rand, 'back.out'], ['speed', @speed, rand, 'quad.out']
+    @t = 0
 
   update: ->
+    @t += cg.dt_seconds
+    @speed = (100 + 40*Math.cos(@t*3)) * Math.max 0, Math.sin @t*16
     targetVelocity = @vecTo(cg('#player')).mag(@speed)
-    @body.v.$add(targetVelocity.sub(@body.v).mul(0.2))
+    @body.v.$add(targetVelocity.sub(@body.v).$mul(0.2))
 
     for other in cg('enemy')
       cg.physics.collide @body, other.body  unless other is @
@@ -64,8 +66,13 @@ class Enemy extends cg.Actor
     @leftEye.wince().ball.rotation = cg.rand -Math.PI, Math.PI
     @rightEye.wince().ball.rotation = cg.rand -Math.PI, Math.PI
     @scale.x = @scale.y = 2
-    @tween 'scale.x', 1, 150
-    @tween 'scale.y', 1, 150
+    @rotation = cg.rand -0.25, 0.25
+    @tween
+      duration: 150
+      values:
+        'scale.x': 1
+        'scale.y': 1
+        'rotation': 0
     if @life <= 0
       cg.sounds.hit.play()
       @destroy()

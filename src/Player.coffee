@@ -1,11 +1,10 @@
 cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
-Interactive = require 'plugins/ui/Interactive'
 Bullet = require 'Bullet'
 Eye = require 'Eye'
 
 class Player extends cg.Actor
-  @plugin Physical, Interactive
+  @plugin Physical
 
   init: ->
     @addClass 'player'
@@ -41,11 +40,11 @@ class Player extends cg.Actor
 
     @eyes = @addChild new cg.Actor
 
-    @leftEye = @eyes.addChild new Eye
+    @leftEye = @eyes.addChild Eye.pool.spawn
       x: -4
       y: -2
 
-    @rightEye = @eyes.addChild new Eye
+    @rightEye = @eyes.addChild Eye.pool.spawn
       x: 4
       y: -2
 
@@ -59,7 +58,7 @@ class Player extends cg.Actor
 
   shoot: ->
     cg.sounds.shot.play(cg.rand(0.15,0.4))
-    shot = cg('#game').addChild new Bullet
+    shot = cg('#game').addChild Bullet.pool.spawn
       x: @x
       y: @y
 
@@ -70,17 +69,15 @@ class Player extends cg.Actor
     shot.body.v = @vecToMouse().mag(500).add(jitter)
     shot.rotation = shot.body.v.angle()
     @body.v.$sub(shot.body.v.mul(0.15))
-    cg('#game').shake.$add(shot.body.v.norm().mul(2))
+    cg('#game').shake.$add(shot.body.v.norm().$mul(4))
 
   update: ->
-    targetVelocity = @direction.norm().mul(@speed)
-    @body.v.$add(targetVelocity.sub(@body.v).mul(0.2))
-    @zRotation += (cg.math.angleDiff -@vecToMouse().angle()-Math.PI*1.5, @zRotation) * 0.1
+    targetVelocity = @direction.norm().$mul(@speed)
+    @body.v.$add(targetVelocity.sub(@body.v).$mul(0.2))
+    @zRotation += (cg.math.minAngle (-@vecToMouse().angle()-Math.PI*1.5)-@zRotation) * 0.1
     @zRotation = cg.math.minAngle @zRotation
     @eyes.x = (@zRotation / Math.PI) * 20
     @leftEye.lookAt cg.input.mouse
     @rightEye.lookAt cg.input.mouse
-
-
 
 module.exports = Player

@@ -13,7 +13,7 @@ class Game extends cg.Scene
       y: cg.height/2
 
     @repeat (-> cg.rand(100, 1500)), ->
-      @addChild new Enemy
+      @addChild Enemy.pool.spawn
         x: cg.rand cg.width
         y: cg.rand cg.height
 
