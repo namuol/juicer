@@ -18,7 +18,7 @@ class Enemy extends cg.Actor
     @body.offset.y = -@body.height/2
 
     @life = 3
-    @speed = 50
+    @speed = 100
 
     @scale.x = @scale.y = 0
     @tween
@@ -41,6 +41,8 @@ class Enemy extends cg.Actor
       y: -2
       scaleX: 0.6
       scaleY: 0.6
+
+    @animate ['speed', 0, 150, 'back.out'], ['speed', @speed, 150, 'quad.out']
 
   update: ->
     targetVelocity = @vecTo(cg('#player')).mag(@speed)
