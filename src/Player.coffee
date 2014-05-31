@@ -34,7 +34,7 @@ class Player extends cg.Actor
       @shoot()  if @shooting
 
   shoot: ->
-    cg.sounds.shot.play(0.4)
+    cg.sounds.shot.play(cg.rand(0.15,0.4))
     shot = cg('#game').addChild new Bullet
       x: @worldX
       y: @worldY
