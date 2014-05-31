@@ -19,6 +19,14 @@ class Enemy extends cg.Actor
     @life = 3
     @speed = 50
 
+    @scale.x = @scale.y = 0
+    @tween
+      duration: 750
+      values:
+        'scale.x': 1
+        'scale.y': 1
+      easeFunc: 'elastic.out'
+
   update: ->
     targetVelocity = @vecTo(cg('#player')).mag(@speed)
     @body.v.$add(targetVelocity.sub(@body.v).mul(0.2))
