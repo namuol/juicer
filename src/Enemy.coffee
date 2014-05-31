@@ -10,6 +10,7 @@ class Enemy extends cg.Actor
     @texture = 'enemy_basic'
     @body.width = @width
     @body.height = @height
+    @life = 3
 
   update: ->
     @body.v.set(@vecTo(cg('#player'))).mag(50)
@@ -20,10 +21,12 @@ class Enemy extends cg.Actor
     if bullet = @touches cg('bullet')
       @hit(bullet)
 
-
   hit: (bullet) ->
-    cg.sounds.hit.play()
-    @destroy()
+    cg.sounds.wallHit.play(cg.rand(0.3,0.5))
     bullet.destroy()
+    @life -= bullet.strength
+    if @life <= 0
+      cg.sounds.hit.play()
+      @destroy()
 
 module.exports = Enemy

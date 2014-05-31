@@ -7,6 +7,7 @@ class Bullet extends cg.Actor
 
   init: ->
     @addClass 'bullet'
+    @strength = 1
     @texture = 'bullet_basic'
     @body.width = @width
     @body.height = @height
