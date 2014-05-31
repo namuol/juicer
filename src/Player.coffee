@@ -25,7 +25,13 @@ class Player extends cg.Actor
       @direction.y = val
 
     @on cg.input, 'mouseDown', ->
-      @shoot()
+      @shooting = true
+
+    @on cg.input, 'mouseUp', ->
+      @shooting = false
+
+    @repeat 100, ->
+      @shoot()  if @shooting
 
   shoot: ->
     cg.sounds.shot.play(0.4)
