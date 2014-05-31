@@ -9,8 +9,11 @@ class Bullet extends cg.Actor
     @addClass 'bullet'
     @strength = 1
     @texture = 'bullet_basic'
+    @anchor.x = @anchor.y = 0.5
     @body.width = @width
     @body.height = @height
+    @body.offset.x = -@width/2
+    @body.offset.y = -@height/2
 
     # Whenever a bullet hits a wall...
     @on @body, 'collision', ->
