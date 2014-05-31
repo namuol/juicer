@@ -26,6 +26,7 @@ class Enemy extends cg.Actor
         'scale.x': 1
         'scale.y': 1
       easeFunc: 'elastic.out'
+    cg.sounds.spawn.play(cg.rand(0.3,0.5))
 
   update: ->
     targetVelocity = @vecTo(cg('#player')).mag(@speed)
