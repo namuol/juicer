@@ -34,14 +34,10 @@ class Enemy extends cg.Actor
     @leftEye = @addChild new Eye
       x: 4
       y: -2
-      scaleX: 0.6
-      scaleY: 0.6
 
     @rightEye = @addChild new Eye
       x: @width-4
       y: -2
-      scaleX: 0.6
-      scaleY: 0.6
 
     rand = -> cg.rand 100, 250
     @animate ['speed', 0, rand, 'back.out'], ['speed', @speed, rand, 'quad.out']
@@ -56,8 +52,9 @@ class Enemy extends cg.Actor
     if bullet = @touches cg('bullet')
       @hit(bullet)
 
-    @leftEye.lookAt cg('#player')
-    @rightEye.lookAt cg('#player')
+    playerPos = new cg.math.Vector2 cg('#player').worldX, cg('#player').worldY
+    @leftEye.lookAt playerPos
+    @rightEye.lookAt playerPos
 
   hit: (bullet) ->
     @body.v.$add(bullet.body.v.mul(0.5))

@@ -14,13 +14,12 @@ class Eye extends cg.Actor
     @targetRotation = 0
     @origScale = @scale.y
 
-  lookAt: (actor) ->
-    actorWorldPos = new cg.math.Vector2 actor.worldX, actor.worldY
+  lookAt: (otherWorldPos) ->
     worldPos = new cg.math.Vector2 @worldX, @worldY
-    @targetRotation = actorWorldPos.sub(worldPos).angle()
+    @targetRotation = otherWorldPos.sub(worldPos).angle()
 
-  wince: ->
-    @tween 'scale.y', @origScale*0.1, 25
+  wince: (scale=0.1) ->
+    @tween 'scale.y', @origScale*scale, 25
     .then ->
       @tween 'scale.y', @origScale, 250
     return @

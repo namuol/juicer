@@ -17,7 +17,8 @@ module.exports = ->
     width: 360
     height: 360
     backgroundColor: 0xaaaaaa
-    displayMode: 'pixel'
+    displayMode: 'pixelPerfect'
+    # textureFilter: 'nearest'
 
   loadingScreen = cg.stage.addChild new cg.extras.LoadingScreen
   loadingScreen.begin()

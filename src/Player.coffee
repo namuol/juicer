@@ -2,6 +2,7 @@ cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
 Interactive = require 'plugins/ui/Interactive'
 Bullet = require 'Bullet'
+Eye = require 'Eye'
 
 class Player extends cg.Actor
   @plugin Physical, Interactive
@@ -9,9 +10,12 @@ class Player extends cg.Actor
   init: ->
     @addClass 'player'
     @texture = 'player_basic'
+    @anchor.x = @anchor.y = 0.5
     @body.bounce = 0
     @body.width = @width
     @body.height = @height
+    @body.offset.x = -@width/2
+    @body.offset.y = -@height/2
 
     @controls = cg.input.controls.player
 
@@ -35,11 +39,22 @@ class Player extends cg.Actor
 
     @jitter = 50
 
+    @leftEye = @addChild new Eye
+      x: -4
+      y: -2
+
+    @rightEye = @addChild new Eye
+      x: 4
+      y: -2
+
   shoot: ->
     cg.sounds.shot.play(cg.rand(0.15,0.4))
     shot = cg('#game').addChild new Bullet
-      x: @worldX + @height/2
-      y: @worldY + @width/2
+      x: @x
+      y: @y
+
+    @leftEye.wince(0.5).ball.rotation = cg.rand -Math.PI, Math.PI
+    @rightEye.wince(0.5).ball.rotation = cg.rand -Math.PI, Math.PI
 
     jitter = new cg.math.Vector2(cg.rand(-@jitter,@jitter), cg.rand(-@jitter,@jitter))
     shot.body.v = @vecToMouse().mag(500).add(jitter)
@@ -50,5 +65,9 @@ class Player extends cg.Actor
   update: ->
     targetVelocity = @direction.norm().mul(@speed)
     @body.v.$add(targetVelocity.sub(@body.v).mul(0.2))
+    # @flipX = @body.v.x < 0
+
+    @leftEye.lookAt cg.input.mouse
+    @rightEye.lookAt cg.input.mouse
 
 module.exports = Player
