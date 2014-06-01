@@ -70,13 +70,14 @@ class Player extends cg.Actor
     shot.body.v = @vecToMouse().mag(500).add(jitter)
     shot.rotation = shot.body.v.angle()
 
-    offset = shot.body.v.norm().mul(8)
+    offset = shot.body.v.norm().mul(10)
+    scale = cg.rand(0.5, 1)
     cg('#game').addChildAt Flash.pool.spawn(
       x: @x + offset.x
       y: @y + offset.y
       scale:
-        x: 0.75
-        y: 0.75
+        x: scale
+        y: scale
     ), @getChildIndex()
 
     @body.v.$sub(shot.body.v.mul(0.15))

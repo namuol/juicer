@@ -18,9 +18,14 @@ class Bullet extends cg.Actor
     # Whenever a bullet hits a wall...
     @once @body, 'collision', (spot) ->
       cg.sounds.wallHit.play(cg.rand(0.1,0.3))
+      scale = cg.rand(0.75,1.25)
       cg('#game').addChild Flash.pool.spawn
         x: spot.x
         y: spot.y
+        scale:
+          x: scale
+          y: scale
+
       @destroy()
 
 module.exports = Bullet
