@@ -2,6 +2,7 @@ cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
 Bullet = require 'Bullet'
 Eye = require 'Eye'
+Flash = require 'Flash'
 
 class Player extends cg.Actor
   @plugin Physical
@@ -68,6 +69,16 @@ class Player extends cg.Actor
     jitter = new cg.math.Vector2(cg.rand(-@jitter,@jitter), cg.rand(-@jitter,@jitter))
     shot.body.v = @vecToMouse().mag(500).add(jitter)
     shot.rotation = shot.body.v.angle()
+
+    offset = shot.body.v.norm().mul(8)
+    cg('#game').addChildAt Flash.pool.spawn(
+      x: @x + offset.x
+      y: @y + offset.y
+      scale:
+        x: 0.75
+        y: 0.75
+    ), @getChildIndex()
+
     @body.v.$sub(shot.body.v.mul(0.15))
     cg('#game').shake.$add(shot.body.v.norm().$mul(4))
 
