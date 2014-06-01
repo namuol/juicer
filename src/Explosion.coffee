@@ -1,5 +1,6 @@
 cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
+Smoke = require 'Smoke'
 
 class Explosion extends cg.Actor
   @plugin Physical, cg.util.HasPooling
@@ -13,7 +14,18 @@ class Explosion extends cg.Actor
     @scale.x = @scale.y = cg.rand(1,2)
 
     @anim = cg.sheets.flash.anim [0,1], cg.dt*2, false
-    @on @anim, 'end', -> @destroy()
+    @on @anim, 'end', ->
+      for i in [0..3]
+        scale = cg.rand(0.5,1)
+        @parent.addChildAt Smoke.pool.spawn(
+          x: @x + cg.rand(-20,20)
+          y: @y + cg.rand(-20,20)
+          scale:
+            x: scale
+            y: scale
+          ttl: 2500 * scale
+        ), @getChildIndex()
+      @destroy()
 
     @radius = 60
     @body.width = @body.height = @radius * 2
