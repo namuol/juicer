@@ -2,6 +2,7 @@ cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
 Eye = require 'Eye'
 Explosion = require 'Explosion'
+Smoke = require 'Smoke'
 
 MAX_LIFE = 10
 
@@ -25,11 +26,25 @@ class Enemy extends cg.Actor
     @speed = 100
 
     @scale.x = @scale.y = 0
+
+    for i in [0..3]
+      scale = cg.rand(0.2,0.5)
+      s = cg('#game').addChild Smoke.pool.spawn
+        x: @x + cg.rand(-8,8)
+        y: @y + cg.rand(-2,2)
+        scale:
+          x: scale
+          y: scale
+        ttl: 2500 * scale
+
     @tween
       duration: 750
       values:
         'scale.y': 1
       easeFunc: 'elastic.out'
+    @going = false
+    @delay 250, ->
+      @going = true
 
     cg.sounds.spawn.play(cg.rand(0.3,0.5))
 
@@ -47,10 +62,11 @@ class Enemy extends cg.Actor
     @t = 0
 
   update: ->
-    @t += cg.dt_seconds
-    @speed = (100 + 40*Math.cos(@t*3)) * Math.max 0, Math.sin @t*16
-    targetVelocity = @vecTo(cg('#player')).mag(@speed)
-    @body.v.$add(targetVelocity.sub(@body.v).$mul(0.2))
+    if @going
+      @t += cg.dt_seconds
+      @speed = (100 + 40*Math.cos(@t*3)) * Math.max 0, Math.sin @t*16
+      targetVelocity = @vecTo(cg('#player')).mag(@speed)
+      @body.v.$add(targetVelocity.sub(@body.v).$mul(0.2))
 
     for other in cg('enemy')
       continue  if other is @
