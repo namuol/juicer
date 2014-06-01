@@ -79,7 +79,7 @@ class Enemy extends cg.Actor
     @life = cg.math.clamp @life-amount, 0,MAX_LIFE
     @leftEye.wince().ball.rotation = cg.rand -Math.PI, Math.PI
     @rightEye.wince().ball.rotation = cg.rand -Math.PI, Math.PI
-    @scale.x = @scale.y = 2
+    @scale.x = @scale.y = 2*amount
     @rotation = cg.rand -0.25, 0.25
     @tween
       duration: 150
