@@ -1,6 +1,9 @@
 cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
 Eye = require 'Eye'
+Explosion = require 'Explosion'
+
+MAX_LIFE = 10
 
 class Enemy extends cg.Actor
   @plugin Physical, cg.util.HasPooling
@@ -70,7 +73,10 @@ class Enemy extends cg.Actor
     @body.v.$add(bullet.body.v.mul(0.8))
     cg.sounds.wallHit.play(cg.rand(0.3,0.5))
     bullet.destroy()
-    @life -= bullet.strength
+    @damage bullet.strength
+
+  damage: (amount) ->
+    @life = cg.math.clamp @life-amount, 0,MAX_LIFE
     @leftEye.wince().ball.rotation = cg.rand -Math.PI, Math.PI
     @rightEye.wince().ball.rotation = cg.rand -Math.PI, Math.PI
     @scale.x = @scale.y = 2
@@ -81,8 +87,12 @@ class Enemy extends cg.Actor
         'scale.x': 1
         'scale.y': 1
         'rotation': 0
-    if @life <= 0
-      cg.sounds.hit.play()
-      @destroy()
+    .then ->
+      if @life <= 0
+        cg.sounds.hit.play()
+        cg('#game').addChild Explosion.pool.spawn
+          x: @x
+          y: @y-@height/2
+        @destroy()
 
 module.exports = Enemy

@@ -5,9 +5,11 @@
     "enemy_basic": "assets/enemy_basic.png",
     "bullet_basic": "assets/bullet_basic.png",
     "bg": "assets/bg.png",
-    "eye": "assets/eye.png"
+    "eye": "assets/eye.png",
+    "smoke": "assets/smoke.png"
   },
   "sheets": {
+    "flash": ["assets/flash.png", 30, 30]
   },
   "fonts": {
   },
