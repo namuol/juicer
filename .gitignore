@@ -3,3 +3,4 @@ src/support
 dist
 src/main-built.js
 src/main-built.js.map
+metadist
