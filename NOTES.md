@@ -1,12 +1,21 @@
 ## intro
-Hi, my name is Lou, and in another life I was a game developer.
+Hi, my name is Lou, and in another life, I made games.
 
-This talk is about "game feel". Don't worry if you don't know what that means, it doesn't matter.
+Quickly:
+- Who has worked on games? Design or development?
+- Who has worked on interactive applications, frontend design?
 
-An alternative title for the talk could have been "34 stupid tricks to make your game more
-fun".
+So I'm mostly going to be talking about action games, but there are some takeaways
+that I think apply to any kind of **interactive application**.
 
-I have a lot of details to go through so I'll try to go quickly.
+I use the term *"Game Feel"* to refer to any design choices you make 
+for a game that don't directly impact the *mechanics* and *outcome* of
+the game, but do affect the way the game itself *feels*.
+
+But really, a better title for this talk would have been
+"34 stupid tricks to make your game more fun".
+
+I'll try to go quickly so there's some time at the end for questions.
 
 ## 0: nothing
 Here's a basic action game.
@@ -24,9 +33,10 @@ Let's make it more fun.
 
 ## 1: sounds
 Sound is almost always the last thing people add to their game, but it's the 
-easiest way to make your game more fun.
+easiest way to make your game more fun, and it will influence your
+design decisions down the road.
 
-Don't wait til the end; add sounds as soon as possible.
+So don't wait til the end; add sounds to your game as soon as possible.
 
 Try to add sounds for any meaningful event in the game.
 
@@ -45,7 +55,7 @@ some amount of "physicality" to our enemies.
 Here I gave the player some "momentum", so when you let go of the arrow keys, the player
 will slide for a split second in the direction it was heading.
 
-This adds some "physicality" to our player. This is something the player might
+This adds some "physicality" to our player. This is something the user might
 not even notice, but it helps.
 
 ## 4: kickback
@@ -60,6 +70,8 @@ cathartic effect when combined with the sound.
 ## 5: rapidfire
 Here I just made the player's gun fire rapidly when the mouse is held.
 Machine-gun style.
+
+In an action game, more bullets generally means more fun.
 
 This creates a game mechanic: you can control the player's movement
 just by shooting your gun.
@@ -86,15 +98,12 @@ but more importantly
 2. It feels more powerful and cathartic
 
 ## 8: enemy HP
-With rapidfire, it's too easy to kill the red squares.
+Now that we have rapidfire, it's too easy to kill the red squares.
 
-I just made it so you need to hit the enemy 3 times before
-it disappears.
+So I gave the enemies some health and it takes 3 shots now.
 
-This is better, but now it feels awkward that the bullet just disappears
-when it hits the enemy.
-
-You can't really "see" that you're doing any damage.
+The game is more balanced, but the enemies feel awkwardly static since
+they are basically unaffected by the bullets.
 
 ## 9: enemy damage bloop
 I added a little "bloop" animation so you can tell when you hit an enemy.
@@ -119,26 +128,32 @@ them to point in the direction they travel.
 ## 14: next-gen graphics
 Here are some "next-gen" graphics.
 
-This isn't anything fancy, and you should choose your style to fit your game.
+This isn't anything fancy, but adds some visual interest.
+
+The key is to be consistent.
 
 ## 15: awesome background
-I added a background so you can tell that the screen doesn't
-scroll, and it adds just a little visual interest.
+Here I added a simple background.
+
+This adds some kind of visual interest, and also
+makes it clear that the camera is fixed.
 
 ## 16: theyre watching...
 Okay so, I kind of go off the deep end here...
 
 I gave the enemies eyes that follow the player... it's really
-easy to do and adds a lot of personality to the game.
+easy to do and adds a lot of personality.
 
 ## 17: googlier eyes
-The eyes were kind of robotic, so now I made them operate
-like springs and "wiggle" like a googly-eye toy.
+The eyes were kind of just robotically following the player,
+so now I made them operate like springs and "wiggle" like a googly-eye toy.
 
 ## 18: walkin
-Here I just multiply the enemy velocity by a sine wave, and it
-makes them look like they're "walking".
+Now that our enemies seem more like little creatures, it made sense to
+make them appear to "walk" instead of just gliding around.
 
+I just multiply the enemy velocity by a sine wave to get this effect.
+sa
 Very easy thing to implement and makes the enemies feel much more "alive".
 
 ## 19: slightly more random walking
@@ -150,13 +165,19 @@ they got hit.
 
 I think this had a really powerful effect, and all I'm doing
 is scaling the eyes vertically and randomizing which direction
-each eye looks, so they appear to be disoriented.
+each eye looks, so they look momentarily-disoriented.
 
 ## 21: obligatory screenshake
 Now whenever you shoot, the screen shakes.
 
 A subtle note: the direction that the screen shakes is actually 
 the same as the direction you aim.
+
+This is probably the easiest trick to use, but you have to be careful not
+to overdo it, because it can be nauseating.
+
+If you use it a lot, it might be a good idea to allow the user to
+disable it.
 
 ## 22: player eyes
 I might as well give the player eyes.
@@ -167,7 +188,7 @@ it fires a shot. It's pretty hilarious.
 ## 23: super fake player rotation
 Here I tried to make the player feel more 3-dimensional..
 
-I wont go into detail about how I implemented this, but I love
+In the interest of time, I wont go into detail about how I implemented this, but I love
 the effect it had.
 
 ## 24: enemy hit rotation (also some pooling...)
@@ -186,11 +207,13 @@ they blink or wince.
 ## 27: simple explosions
 It's not an action game without explosions.
 
-I added the most basic explosion animation possible, which
+Now, when the red squares die, they explode instead of disappearing.
+
+I used the most basic explosion animation possible, which
 is just a black circle, and a white circle, each one is visible
 for a single frame.
 
-Combining this with the sound effect feels really nice, and you don't need
+Combining this with the sound effect feels really nice. You don't need
 a big fancy explosion sprite.
 
 ## 28: physical explosions = more fun
