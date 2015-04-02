@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Juicer</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1' />
+
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background: black;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Vertical Centering: */
+      canvas, #pleasewait, #combo-game {
+        position: relative;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        padding: 0;
+        text-align: center;
+      }
+
+      #combo-game {
+        display: none;
+        width: 100%;
+        height: 100%;
+        max-width: 1280px;
+        max-height: 720px;
+      }
+
+      #pleasewait {
+        color: white;
+        font-family: sans-serif;
+        font-size: 20px;
+        height: 1em;
+      }
+
+      .wrapper {
+        display: flex;
+        color: white;
+        font-family: sans-serif;
+        width: 100%;
+        height: 100%;
+      }
+
+      .side {
+        overflow-y: auto;
+        font-size: 80%;
+      }
+
+      ul {
+        margin: 0;
+      }
+
+      a[href] {
+        color: white;
+        opacity: 0.7;
+      }
+
+      a[href].current {
+        opacity: 1;
+      }
+
+      button {
+        margin: 1em;
+      }
+
+      input[type=checkbox] {
+        width: 30px;
+        height: 30px;
+      }
+
+      label {
+        font-weight: bold;
+        font-size: 120%;
+        line-height: 30px;
+      }
+
+      .slomowrap {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="side">
+        <div class="slomowrap" style="margin: 1em">
+          <label for="slomo">Slo-mo</label>
+          <input id="slomo" type="checkbox" onchange="cg.timeScale = cg.timeScale === 0.2 ? 1 : 0.2; event.target.blur();" />
+        </div>
+        <ul>
+          <li><a id="602b350" href="/602b350/index.html">0: nothing</a></li>
+          <li><a id="218b933" href="/218b933/index.html">1: sounds</a></li>
+          <li><a id="3ad9bc2" href="/3ad9bc2/index.html">2: enemies cluster/collide</a></li>
+          <li><a id="c273ff0" href="/c273ff0/index.html">3: more "natural" player motion</a></li>
+          <li><a id="344adc2" href="/344adc2/index.html">4: kickback</a></li>
+          <li><a id="04c0ceb" href="/04c0ceb/index.html">5: rapidfire</a></li>
+          <li><a id="c4adf02" href="/c4adf02/index.html">6: sound volume randomization</a></li>
+          <li><a id="19df72e" href="/19df72e/index.html">7: shot jitter</a></li>
+          <li><a id="47b1629" href="/47b1629/index.html">8: enemy HP</a></li>
+          <li><a id="00653be" href="/00653be/index.html">9: enemy damage bloop</a></li>
+          <li><a id="789ea54" href="/789ea54/index.html">10: enemy damage kickback</a></li>
+          <li><a id="cf13cf9" href="/cf13cf9/index.html">11: enemy appear anim</a></li>
+          <li><a id="c85435a" href="/c85435a/index.html">12: enemy spawn sound</a></li>
+          <li><a id="0d8ae6c" href="/0d8ae6c/index.html">13: bullet graphics/rotation</a></li>
+          <li><a id="7c40cdb" href="/7c40cdb/index.html">14: next-gen graphics</a></li>
+          <li><a id="c46da36" href="/c46da36/index.html">15: awesome background</a></li>
+          <li><a id="3c19160" href="/3c19160/index.html">16: theyre watching...</a></li>
+          <li><a id="7ad4947" href="/7ad4947/index.html">17: googlier eyes</a></li>
+          <li><a id="5995713" href="/5995713/index.html">18: walkin</a></li>
+          <li><a id="2cc59eb" href="/2cc59eb/index.html">19: slightly more random walking</a></li>
+          <li><a id="234061e" href="/234061e/index.html">20: wincing</a></li>
+          <li><a id="402670b" href="/402670b/index.html">21: obligatory screenshake</a></li>
+          <li><a id="abdb5ed" href="/abdb5ed/index.html">22: player eyes</a></li>
+          <li><a id="f58ba6d" href="/f58ba6d/index.html">23: super fake player rotation</a></li>
+          <li><a id="32b2ee7" href="/32b2ee7/index.html">24: enemy hit rotation (also some pooling...)</a></li>
+          <li><a id="3524c7c" href="/3524c7c/index.html">25: enemies appear to rise from the ground</a></li>
+          <li><a id="d95c95b" href="/d95c95b/index.html">26: enemies wince when they bump into each other hard enough</a></li>
+          <li><a id="a1c0e31" href="/a1c0e31/index.html">27: simple explosions</a></li>
+          <li><a id="00a6b41" href="/00a6b41/index.html">28: physical explosions = more fun</a></li>
+          <li><a id="e693a16" href="/e693a16/index.html">28: physical explosions = more fun</a></li>
+          <li><a id="ac5bd7d" href="/ac5bd7d/index.html">29: bullet hits</a></li>
+          <li><a id="0eee489" href="/0eee489/index.html">30: muzzleflash</a></li>
+          <li><a id="09be936" href="/09be936/index.html">31: random muzzle/bullet-hit flash size</a></li>
+          <li><a id="769e2da" href="/769e2da/index.html">32: smokin</a></li>
+          <li><a id="137a389" href="/137a389/index.html">33: enemy spawn delay+smoke</a></li>
+          <li><a id="254cab4" href="/254cab4/index.html">34: textured smoke?</a></li>
+        </ul>
+      </div>
+      <div id='combo-game'>
+        <div id='pleasewait'>Please Wait...</div>
+      </div>
+    </div>
+
+    <script type='application/javascript' src='main-built.js'></script>
+    <script>
+      document.getElementById(location.pathname.split('/')[1]).className += " current";
+      setTimeout(function () {
+        cg.displayMode = "pixel";
+      }, 250);
+    </script>
+  </body>
+
+
+</html>

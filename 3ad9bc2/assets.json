@@ -1,0 +1,21 @@
+{
+  "textures": {
+    "logo": "assets/logo.png",
+    "player_basic": "assets/player_basic.png",
+    "enemy_basic": "assets/enemy_basic.png",
+    "bullet_basic": "assets/bullet_basic.png"
+  },
+  "sheets": {
+  },
+  "fonts": {
+  },
+  "sounds": {
+    "shot": "assets/shot.*",
+    "hit": "assets/hit.*",
+    "wallHit": "assets/wallHit.*"
+  },
+  "music": {
+  },
+  "json": {
+  }
+}
